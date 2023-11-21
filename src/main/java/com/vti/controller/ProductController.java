@@ -32,13 +32,13 @@ public class ProductController {
 
 
     @GetMapping("/all")
-    public Page<ProductDTO> getAllProducts(Pageable pageable,
-                                           @RequestParam(value = "search",required = false)String search, ProductFilterForm filter){
-        Page<Product> entityPages = service.getAllProducts(pageable, search, filter);
-        List<ProductDTO> dtos = modelMapper.map(entityPages.getContent(), new TypeToken<List<ProductDTO>>(){
-        }.getType());
-        Page<ProductDTO> dtoPages = new PageImpl<>(dtos, pageable, entityPages.getTotalElements());
-        return  dtoPages;
+    public List<ProductDTO> getAllProducts(
+            @RequestParam(value = "search", required = false) String search,
+            ProductFilterForm filter
+    ) {
+        List<Product> entityList = service.getAllProducts(search, filter);
+        List<ProductDTO> dtos = modelMapper.map(entityList, new TypeToken<List<ProductDTO>>() {}.getType());
+        return dtos;
     }
 
     @GetMapping(value = "detail/{id}")
@@ -71,7 +71,7 @@ public class ProductController {
             @RequestParam("description") String description,
             @RequestParam("categoryId") int categoryId,
             @RequestParam("sizeIds") List<Integer> sizeIds,
-            @RequestParam("file") MultipartFile imageFile
+            @RequestParam(value = "file") MultipartFile file
     ) {
         ProductFormForCreating productForm = new ProductFormForCreating();
         productForm.setTitle(title);
@@ -80,7 +80,7 @@ public class ProductController {
         productForm.setCategoryId(categoryId);
         productForm.setSizeIds(sizeIds);
 
-        Product createdProduct = service.addProduct(productForm, imageFile);
+        Product createdProduct = service.addProduct(productForm, file);
 
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }

@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface IProductService {
-   public Page<Product> getAllProducts(Pageable pageable, String search, ProductFilterForm filter);
+   public List<Product> getAllProducts(String search, ProductFilterForm filter);
    public Product getProductByID(int id);
    public void updateProduct(int id, ProductFormForUpdating form);
 

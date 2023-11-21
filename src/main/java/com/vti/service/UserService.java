@@ -31,6 +31,8 @@ public class UserService implements IUserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private IPaymentRepository paymentRepository;
+    @Autowired
+    private ImageUploadService imageUploadService;
 
     @Override
     public User saveUser(User user, MultipartFile imageFile) {
@@ -39,14 +41,8 @@ public class UserService implements IUserService {
         user.setRole(Role.USER);
 
         if (imageFile != null && !imageFile.isEmpty()) {
-            String fileName = UUID.randomUUID().toString() + "_" + imageFile.getOriginalFilename();
-            String filePath = "uploads/" + fileName;
-            user.setImage(fileName);
-            try {
-                Files.copy(imageFile.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            String image = imageUploadService.uploadImage(imageFile,"img_users");
+            user.setImage(image);
         }
         else{
             user.setImage(null);
@@ -98,6 +94,7 @@ public class UserService implements IUserService {
     }
     private UserDto convertToDto(User user) {
         UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
         userDto.setUsername(user.getUsername());
         userDto.setEmail(user.getEmail());
         userDto.setPhoneNumber(user.getPhoneNumber());
