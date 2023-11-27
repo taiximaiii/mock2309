@@ -30,7 +30,7 @@ public class Category implements Serializable {
     private List<Product> products;
 
     public enum Type {
-        MAN("Man"), WOMEN("Women"), KID("Kid");
+        MEN("Men"), WOMEN("Women"), KID("Kid");
         private String value;
         private Type(String value) {
             this.value = value;

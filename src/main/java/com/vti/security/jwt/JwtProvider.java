@@ -26,7 +26,7 @@ public class JwtProvider {
     @Value("${spring.jwt.secret}")
     private String JWT_SECRET;
     @Value("${spring.jwt.jwtExpirationTime}")
-    private int JWT_EXPIRATION_TIME;
+    private long JWT_EXPIRATION_TIME;
 
     public String generateToken(UserPrincipal auth){
         String authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining());
