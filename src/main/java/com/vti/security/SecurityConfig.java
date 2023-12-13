@@ -34,7 +34,8 @@ public class SecurityConfig {
             "/api/v1/products/**",
             "/api/v1/order/admin/all",
             "/api/v1/user/listUser",
-            "/api/v1/user/delete/**"
+            "/api/v1/user/delete/**",
+            "/api/v1/category/**",
 
     };
 

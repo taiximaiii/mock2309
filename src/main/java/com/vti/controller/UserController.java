@@ -73,8 +73,8 @@ public class UserController {
     }
 
     @PutMapping("/updateAddress/{addressId}")
-    public ResponseEntity<?> updateAddress(@AuthenticationPrincipal UserPrincipal userPrincipal,@PathVariable Integer addressId,@RequestBody Address updateAdress){
-        addressService.updateAddress(userPrincipal.getId(), addressId,updateAdress);
+    public ResponseEntity<?> updateAddress(@AuthenticationPrincipal UserPrincipal userPrincipal,@PathVariable Integer addressId,@RequestBody Address updateAddress){
+        addressService.updateAddress(userPrincipal.getId(), addressId,updateAddress);
         return ResponseEntity.ok("Update address successfully.");
     }
     @GetMapping("/listUser")

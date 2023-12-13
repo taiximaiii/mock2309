@@ -1,6 +1,7 @@
 package com.vti.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,32 +22,11 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
     @Column(name = "type", nullable = false)
-    @Convert(converter = CategoryConvert.class)
-    private Type type;
+    private String type;
 
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private List<Product> products;
-
-    public enum Type {
-        MEN("Men"), WOMEN("Women"), KID("Kid");
-        private String value;
-        private Type(String value) {
-            this.value = value;
-        }
-        public String getValue() {
-            return value;
-        }
-        public static Type toEnum(String sqlValue) {
-            for (Type type : Type.values()) {
-                if (type.getValue().equals(sqlValue)) {
-                    return type;
-                }
-            }
-            return null;
-        }
-
-    }
 
 }
